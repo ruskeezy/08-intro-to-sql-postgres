@@ -22,7 +22,7 @@ app.use(express.static('./public'));
 
 // REVIEW: Routes for requesting HTML resources
 app.get('/new', (request, response) => {
-  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
+  // DONE COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
   // From the diagram, this get request is also sending a response back of a file from the public directory. Numbers: 2, 5, and 1 (in order)
   // This is creating a route for new.html to be served, so it does not interact with article.js.
   // READ and CREATE (in order) 
@@ -32,7 +32,7 @@ app.get('/new', (request, response) => {
 
 // REVIEW: Routes for making API calls to use CRUD Operations on our database
 app.get('/articles', (request, response) => {
-  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
+  // DONE COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
   // This piece of code is a get request, as well as a query on our database. This means it is 2, 3, 4, and 5 from the diagram.
   // This piece of code is interacting with article.fetchAll();, because fetchAll() interacts with '/articles' and loads the results.
   // READ.
@@ -46,8 +46,10 @@ app.get('/articles', (request, response) => {
 });
 
 app.post('/articles', (request, response) => {
-  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // DONE COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? 
+  // This piece of code queries the DB and creates it with the request data. this means it is 3 and 4.  But since the data is initiated from the function on the article.js, then 2, 3, 4 and 5.  
+  //Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
+  // The Article.prototype.insertRecord method is interacting with this.  CRUD is Create.
   client.query(
     `INSERT INTO
     articles(title, author, "authorUrl", category, "publishedOn", body)
@@ -71,8 +73,13 @@ app.post('/articles', (request, response) => {
 });
 
 app.put('/articles/:id', (request, response) => {
-  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // DONE COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? 
+  // This piece of code queries the DB and updates it with the request data. this means it is 3 and 4.  But since the data is initiated from the function on the article.js, then 2, 3, 4 and 5.
+  //Which method of article.js is interacting with this particular piece of `server.js`? 
+  //  Article.prototype.updateRecord
+  //What part of CRUD is being enacted/managed by this particular piece of code?
+  // Update
+ 
   client.query(
     `UPDATE articles
     SET
@@ -98,8 +105,12 @@ app.put('/articles/:id', (request, response) => {
 });
 
 app.delete('/articles/:id', (request, response) => {
-  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // DONE COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? 
+  // 2,3,4,5
+  //Which method of article.js is interacting with this particular piece of `server.js`? 
+  // Article.prototype.deleteRecord
+  //What part of CRUD is being enacted/managed by this particular piece of code?
+  // Delete
   client.query(
     `DELETE FROM articles WHERE article_id=$1;`,
     [request.params.id]
@@ -113,8 +124,12 @@ app.delete('/articles/:id', (request, response) => {
 });
 
 app.delete('/articles', (request, response) => {
-  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // DONE COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? 
+  // 2,3,4,5
+  // Which method of article.js is interacting with this particular piece of `server.js`? 
+  // Article.truncateTable
+  // What part of CRUD is being enacted/managed by this particular piece of code?
+  // Delete
   client.query(
     'DELETE FROM articles;'
   )
@@ -126,8 +141,8 @@ app.delete('/articles', (request, response) => {
     });
 });
 
-// COMMENT: What is this function invocation doing?
-// PUT YOUR RESPONSE HERE
+// DONE COMMENT: What is this function invocation doing?
+// this invokes the function that creates the table if it does not exist in the database, then invokes loadArticles().  
 loadDB();
 
 app.listen(PORT, () => {
