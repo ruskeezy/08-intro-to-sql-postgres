@@ -6,10 +6,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
+const conString = 'postgres://ruskeezy:1234@HOST:5432/testerdb'
 
 
 const pg = require('pg');
-const client = new pg.Client();
+const client = new pg.Client(conString);
 // REVIEW: Use the client object to connect to our DB.
 client.connect();
 
@@ -153,8 +154,12 @@ app.listen(PORT, () => {
 //////// ** DATABASE LOADER ** ////////
 ////////////////////////////////////////
 function loadArticles() {
-  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code?
+  // This function has a database query, as well as sending the results back to the server. 3 and 4 from the diagram.
+  // Which method of article.js is interacting with this particular piece of `server.js`?
+  // This piece of server.js doesn't interact with article.js.
+  // What part of CRUD is being enacted/managed by this particular piece of code?
+  // READ and CREATE
   client.query('SELECT COUNT(*) FROM articles')
     .then(result => {
     // REVIEW: result.rows is an array of objects that PostgreSQL returns as a response to a query.
@@ -177,8 +182,12 @@ function loadArticles() {
 }
 
 function loadDB() {
-  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code?
+  // This piece of code queries the database to check if a table exists, and if it doesn't, it creates it. If it does exist, it calls loadArticles, which fills the table with parsed JSON objects. 3 and 4 from the diagram.
+  // Which method of article.js is interacting with this particular piece of `server.js`?
+  // This piece of code isn't directly interacting with article.js.
+  // What part of CRUD is being enacted/managed by this particular piece of code?
+  // If the table doesn't exist, it creates a table, and if the table does exist, then it creates records for the table. Double CREATE
   client.query(`
     CREATE TABLE IF NOT EXISTS articles (
       article_id SERIAL PRIMARY KEY,
