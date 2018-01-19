@@ -6,7 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
-const conString = 'postgres://ruskeezy:1234@HOST:5432/testerdb'
+const conString = 'postgres://localhost:5432/testerdb'
 
 
 const pg = require('pg');
