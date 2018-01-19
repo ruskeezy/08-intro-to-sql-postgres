@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-const client = new pg.Client();
 
+const pg = require('pg');
+const client = new pg.Client();
 // REVIEW: Use the client object to connect to our DB.
 client.connect();
 
@@ -22,7 +23,9 @@ app.use(express.static('./public'));
 // REVIEW: Routes for requesting HTML resources
 app.get('/new', (request, response) => {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // From the diagram, this get request is also sending a response back of a file from the public directory. Numbers: 2, 5, and 1 (in order)
+  // This is creating a route for new.html to be served, so it does not interact with article.js.
+  // READ and CREATE (in order) 
   response.sendFile('new.html', {root: './public'});
 });
 
@@ -30,7 +33,9 @@ app.get('/new', (request, response) => {
 // REVIEW: Routes for making API calls to use CRUD Operations on our database
 app.get('/articles', (request, response) => {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // This piece of code is a get request, as well as a query on our database. This means it is 2, 3, 4, and 5 from the diagram.
+  // This piece of code is interacting with article.fetchAll();, because fetchAll() interacts with '/articles' and loads the results.
+  // READ.
   client.query('SELECT * FROM articles')
     .then(function(result) {
       response.send(result.rows);
